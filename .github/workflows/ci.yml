@@ -7,11 +7,11 @@ on:
     branches: [ master, develop ]
 
 jobs:
-  build-frontend:
+  build-and-push:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./spa-java-spring-boot-template/src/main/frontend
+        working-directory: ./spa-java-spring-boot-template/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -20,20 +20,11 @@ jobs:
         with:
           node-version: 14.15.1
       - name: Setup Yarn
-        working-directory: ./src/main/frontend/
-        run: npm install -g yarn
+        run: ./src/main/frontend/npm install -g yarn
       - name: Yarn install
-        run: yarn install
+        run: ./src/main/frontend/yarn install
       - name: Yarn build
-        run: yarn run build
-  build-and-push-package:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./spa-java-spring-boot-template/
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+        run: ./src/main/frontend/yarn run build
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
