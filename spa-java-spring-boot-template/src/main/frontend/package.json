@@ -1,6 +1,10 @@
 {
+  "author": {
+    "name": "vartdalen",
+    "url": "https://github.com/vartdalen"
+  },
   "name": "frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
