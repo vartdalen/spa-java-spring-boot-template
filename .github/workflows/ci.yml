@@ -14,20 +14,20 @@ jobs:
     defaults:
       run:
         working-directory: ./spa-java-spring-boot-template/src/main/frontend
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-        - name: Setup Node.js
-          uses: actions/setup-node@v1
-          with:
-            node-version: 14.15.1
-        - name: Setup Yarn
-          working-directory: ./src/main/frontend/
-          run: npm install -g yarn
-        - name: Yarn install
-          run: yarn install
-        - name: Yarn build
-          run: yarn run build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.15.1
+      - name: Setup Yarn
+        working-directory: ./src/main/frontend/
+        run: npm install -g yarn
+      - name: Yarn install
+        run: yarn install
+      - name: Yarn build
+        run: yarn run build
   build-and-push-package:
     runs-on: ubuntu-latest
     defaults:
