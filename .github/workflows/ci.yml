@@ -1,0 +1,52 @@
+name: ci
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    env:
+      WEB_PATH: ./spa-java-spring-boot-template/
+      FRONTEND_PATH: ./spa-java-spring-boot-template/src/main/frontend/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Node.js setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.15.1
+      - name: Yarn install and build
+        run: |
+          cd $FRONTEND_PATH
+          yarn install
+          yarn run build
+      - name: JDK setup
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11.0.6
+          architecture: x64
+      - name: Maven package
+        run: |
+          cd $WEB_PATH
+          mvn -B package --file pom.xml
+      - name: DockerHub login
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+      - name: QEMU setup
+        uses: docker/setup-qemu-action@v1
+      - name: Docker Buildx setup
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Docker build
+        run: docker buildx build --platform linux/amd64,linux/arm64 -t vartdalen/spa-java-spring-boot-template:latest $WEB_PATH
+        if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master') }}
+      - name: Docker build and push
+        run: docker buildx build --platform linux/amd64,linux/arm64 -t vartdalen/spa-java-spring-boot-template:latest $WEB_PATH --push
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}

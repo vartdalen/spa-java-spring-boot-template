@@ -1,0 +1,11 @@
+# Not in use (could not find action supporting Docker Compose for CI (GitHub Actions)
+version: '3.7'
+services:
+    template-application:
+        container_name: template-application
+        build:
+            context: ./spa-java-spring-boot-template/
+            dockerfile: Dockerfile
+        image: vartdalen/spa-java-spring-boot-template
+        ports:
+            - 8080:8080
