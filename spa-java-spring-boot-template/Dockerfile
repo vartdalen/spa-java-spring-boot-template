@@ -10,10 +10,10 @@ VOLUME /tmp
 EXPOSE 8082
 
 # The application's jar file
-ARG WAR_FILE=target/*.jar
+ARG WAR_FILE=target/*.war
 
 # Add the application's jar to the container
-COPY ${WAR_FILE} app.jar
+COPY ${WAR_FILE} app.war
 
 # Run the jar file
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod","/app.war"]
