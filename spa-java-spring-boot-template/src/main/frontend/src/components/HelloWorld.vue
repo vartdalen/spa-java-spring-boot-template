@@ -1,7 +1,6 @@
 <template>
     <div class="hello">
         <h2>This is a Vue 3 component!</h2>
-        <button @click="increase">Clicked {{ count }} times.</button>
         <h1>{{ msg }}</h1>
         <p>
             For a guide and recipes on how to configure / customize this project,<br>
@@ -34,26 +33,14 @@
 </template>
 
 <script lang="ts">
-    import {defineComponent, ref} from "vue";
+    import {defineComponent} from "vue";
     export default defineComponent({
         props: {
             msg: String
-        },
-        setup() {
-            const count = ref(0)
-            const increase = () => {
-                count.value++
-            }
-
-            return {
-                count,
-                increase,
-            }
         }
     });
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
     h3 {
         margin: 40px 0 0;
