@@ -17,7 +17,8 @@ public class VueRoutePathFilter implements WebFilter {
             "/api/",
             "/js/",
             "/css/",
-            "/img/"
+            "/img/",
+            "/favicon.ico"
     };
     private final String SPA_PATH = "/index.html";
 
