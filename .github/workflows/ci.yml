@@ -10,8 +10,8 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      WEB_PATH: ./spa-java-spring-boot-template/
-      FRONTEND_PATH: ./spa-java-spring-boot-template/src/main/frontend/
+      WEB_PATH: ${{ ./spa-java-spring-boot-template/ }}
+      FRONTEND_PATH: ${{ ./spa-java-spring-boot-template/src/main/frontend/ }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,7 +21,7 @@ jobs:
           node-version: 14.15.1
       - name: Yarn install and build
         run: |
-        cd ${{ env.FRONTEND_PATH }} 
+        cd $FRONTEND_PATH
         yarn install
         yarn run build
       - name: JDK setup
@@ -31,7 +31,7 @@ jobs:
           architecture: x64
       - name: Maven package
         run: |
-        cd ${{ env.WEB_PATH }}
+        cd $WEB_PATH
         mvn -B package --file pom.xml
       - name: DockerHub login
         uses: docker/login-action@v1
@@ -45,8 +45,8 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
       - name: Docker build
-        run: docker buildx build --platform linux/amd64,linux/arm64 -t vartdalen/spa-java-spring-boot-template:latest ${{ env.WEB_PATH }}
+        run: docker buildx build --platform linux/amd64,linux/arm64 -t vartdalen/spa-java-spring-boot-template:latest $WEB_PATH
         if: ${{ !(github.event_name == 'push' && github.ref == 'refs/heads/master') }}
       - name: Docker build and push
-        run: docker buildx build --platform linux/amd64,linux/arm64 -t vartdalen/spa-java-spring-boot-template:latest ${{ env.WEB_PATH }} --push
+        run: docker buildx build --platform linux/amd64,linux/arm64 -t vartdalen/spa-java-spring-boot-template:latest $WEB_PATH --push
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
