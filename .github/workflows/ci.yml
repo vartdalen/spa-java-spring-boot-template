@@ -7,22 +7,35 @@ on:
     branches: [ master, develop ]
 
 jobs:
-  build-and-push:
-    working-directory: ./spa-java-spring-boot-template/
+  strategy:
+    max-parallel: 1
+  build-frontend:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./spa-java-spring-boot-template/src/main/frontend
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+        - name: Setup Node.js
+          uses: actions/setup-node@v1
+          with:
+            node-version: 14.15.1
+        - name: Setup Yarn
+          working-directory: ./src/main/frontend/
+          run: npm install -g yarn
+        - name: Yarn install
+          run: yarn install
+        - name: Yarn build
+          run: yarn run build
+  build-and-push-package:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./spa-java-spring-boot-template/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 14.15.1
-      - name: Setup Yarn
-        run: npm install -g yarn
-      - name: Yarn install
-        run: yarn install
-      - name: Yarn build
-        run: yarn run build
       - name: Set up JDK
         uses: actions/setup-java@v1
         with:
