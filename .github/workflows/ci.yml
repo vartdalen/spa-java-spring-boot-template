@@ -10,8 +10,8 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     env:
-      WEB_PATH: ${{ ./spa-java-spring-boot-template/ }}
-      FRONTEND_PATH: ${{ ./spa-java-spring-boot-template/src/main/frontend/ }}
+      WEB_PATH: ./spa-java-spring-boot-template/
+      FRONTEND_PATH: ./spa-java-spring-boot-template/src/main/frontend/
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,9 +21,9 @@ jobs:
           node-version: 14.15.1
       - name: Yarn install and build
         run: |
-        cd $FRONTEND_PATH
-        yarn install
-        yarn run build
+          cd $FRONTEND_PATH
+          yarn install
+          yarn run build
       - name: JDK setup
         uses: actions/setup-java@v1
         with:
@@ -31,8 +31,8 @@ jobs:
           architecture: x64
       - name: Maven package
         run: |
-        cd $WEB_PATH
-        mvn -B package --file pom.xml
+          cd $WEB_PATH
+          mvn -B package --file pom.xml
       - name: DockerHub login
         uses: docker/login-action@v1
         with:
