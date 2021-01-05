@@ -1,3 +1,3 @@
 module.exports = {
-	outputDir: '../../../target/frontend/public',
+	outputDir: '../../../target/classes/public',
 }
