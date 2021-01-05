@@ -1,29 +1,13 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
+# IntelliJ
+target/**
+.idea/**
 *.iws
-*.iml
 *.ipr
 
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-/build/
+# Maven
+.mvn/**
+mvnw
+mvnw.cmd
 
-### VS Code ###
-.vscode/
-.kotlintest
+# Node
+src/main/frontend/node_modules
