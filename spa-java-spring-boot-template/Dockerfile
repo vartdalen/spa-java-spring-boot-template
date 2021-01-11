@@ -7,7 +7,7 @@ FROM adoptopenjdk:11-jre-hotspot-focal
 VOLUME /tmp
 
 # Make port 8082 available to the world outside this container
-EXPOSE 8082
+EXPOSE 8443
 
 # The application's jar file
 ARG WAR_FILE=target/*.war
